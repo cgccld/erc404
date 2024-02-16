@@ -32,8 +32,8 @@ jobs:
       - name: Check storage layout
         uses: Rubilmax/foundry-storage-check@v3.7
         with:
-          contract: src/Sample.sol:Sample
+          contract: src/MinimalERC404.sol:MinimalERC404
           # settings below are optional, but allows to check whether the added storage slots are empty on the deployed contract
-          rpcUrl: wss://ethereum.publicnode.com # the RPC url to use to query the deployed contract's storage slots
-          address: 0x0000000000000000000000000000000000000000 # the address at which the contract check is deployed
+          rpcUrl: https://polygon-mumbai-pokt.nodies.app # the RPC url to use to query the deployed contract's storage slots
+          address: 0x6FDD213C8643306E5e29E0796E83CAF13e9E96Ad # the address at which the contract check is deployed
           failOnRemoval: true # fail the CI when removing storage slots (default: false)
