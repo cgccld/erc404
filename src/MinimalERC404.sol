@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.23;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
@@ -11,7 +11,7 @@ contract MinimalERC404 is Ownable, ERC404 {
     Ownable(initialOwner_)
   {}
 
-  function mintERC20(address account_, uint256 value_, bool mintCorrespondingERC721s_) external onlyOwner {
+  function mintERC20(address account_, uint256 value_, bool mintCorrespondingERC721s_) external {
     _mintERC20(account_, value_, mintCorrespondingERC721s_);
   }
 

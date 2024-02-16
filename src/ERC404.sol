@@ -391,8 +391,7 @@ abstract contract ERC404 is IERC404 {
       // If this is a burn, reset the owner of the token to 0x0 by deleting the token from _ownedData.
       delete _ownedData[id_];
     }
-
-    emit ERC721Transfer(from_, to_, id_);
+    emit Transfer(from_, to_, id_);
   }
 
   /// @notice Internal function for ERC-20 transfers. Also handles any ERC-721 transfers that may be required.

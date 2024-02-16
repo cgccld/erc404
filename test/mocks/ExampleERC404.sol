@@ -24,10 +24,7 @@ contract ExampleERC404 is Ownable, ERC404, ERC404MerkleClaim {
     return string.concat("https://example.com/token/", Strings.toString(id_));
   }
 
-  function airdropMint(
-    bytes32[] memory proof_,
-    uint256 value_
-  ) public override whenAirdropIsOpen {
+  function airdropMint(bytes32[] memory proof_, uint256 value_) public override whenAirdropIsOpen {
     super.airdropMint(proof_, value_);
     _mintERC20(msg.sender, value_, true);
   }
