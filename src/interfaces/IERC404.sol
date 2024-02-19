@@ -1,17 +1,11 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import {IERC165} from "../libraries/interfaces/IERC165.sol";
+import {IERC165} from "@openzeppelin/contracts/interfaces/IERC165.sol";
 
 interface IERC404 is IERC165 {
-  event ERC20Approval(address owner, address spender, uint256 value);
-  event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
-  event ERC721Approval(address indexed owner, address indexed spender, uint256 indexed id);
-  event ERC20Transfer(address indexed from, address indexed to, uint256 amount);
-  event Transfer(address indexed from, address indexed to, uint256 indexed id);
-
   error NotFound();
-  error InvalidId();
+  error InvalidTokenId();
   error AlreadyExists();
   error InvalidRecipient();
   error InvalidSender();
@@ -19,15 +13,15 @@ interface IERC404 is IERC165 {
   error InvalidOperator();
   error UnsafeRecipient();
   error RecipientIsERC721TransferExempt();
-  error SenderIsERC721TransferExempt();
   error Unauthorized();
   error InsufficientAllowance();
   error DecimalsTooLow();
-  error CannotRemoveFromERC721TransferExempt();
   error PermitDeadlineExpired();
   error InvalidSigner();
   error InvalidApproval();
   error OwnedIndexOverflow();
+  error MintLimitReached();
+  error InvalidExemption();
 
   function name() external view returns (string memory);
   function symbol() external view returns (string memory);
@@ -45,10 +39,16 @@ interface IERC404 is IERC165 {
   function ownerOf(uint256 id_) external view returns (address erc721Owner);
   function tokenURI(uint256 id_) external view returns (string memory);
   function approve(address spender_, uint256 valueOrId_) external returns (bool);
+  function erc20Approve(address spender_, uint256 value_) external returns (bool);
+  function erc721Approve(address spender_, uint256 id_) external;
   function setApprovalForAll(address operator_, bool approved_) external;
   function transferFrom(address from_, address to_, uint256 valueOrId_) external returns (bool);
+  function erc20TransferFrom(address from_, address to_, uint256 value_) external returns (bool);
+  function erc721TransferFrom(address from_, address to_, uint256 id_) external;
   function transfer(address to_, uint256 amount_) external returns (bool);
-  function erc721TokensBankedInQueue() external view returns (uint256);
+  function getERC721QueueLength() external view returns (uint256);
+  function getERC721TokensInQueue(uint256 start_, uint256 count_) external view returns (uint256[] memory);
+  function setSelfERC721TransferExempt(bool state_) external;
   function safeTransferFrom(address from_, address to_, uint256 id_) external;
   function safeTransferFrom(address from_, address to_, uint256 id_, bytes calldata data_) external;
   function DOMAIN_SEPARATOR() external view returns (bytes32);
